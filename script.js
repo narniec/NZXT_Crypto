@@ -1,15 +1,18 @@
-$(document).ready(function(){
-    // Получить погоду для Москвы
-    $.ajax({
-        url: "https://api.gismeteo.ru/weather-by-city/212221",
-        dataType: "json",
-        success: function(data) {
-            var temp = data.temperature;
-            var description = data.description;
-            var icon = data.icon;
-            $("#temp").text(temp);
-            $("#description").text(description);
-            $("#icon").attr("src", "https://www.gismeteo.ru/weather-icons/" + icon + ".png");
-        }
-    });
+$(document).ready(function() {
+    // Функция для обновления курса биткоина
+    function updatePrice() {
+        $.ajax({
+            url: "https://api.coindesk.com/v1/bpi/currentprice/BTC.json",
+            success: function(data) {
+                var price = data.bpi.USD.rate_float;
+                $("#price").text("$" + price.toFixed(2));
+            }
+        });
+    }
+
+    // Обновление курса биткоина каждые 5 секунд
+    setInterval(updatePrice, 5000);
+
+    // Запуск обновления курса
+    updatePrice();
 });
