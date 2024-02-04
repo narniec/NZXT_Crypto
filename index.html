@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы криптовалют</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        .kurs {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .valuta {
+            font-size: 16px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="kurs">
+        <span id="eth-kurs"></span>
+        <span class="valuta">ETH</span>
+    </div>
+    <div class="kurs">
+        <span id="btc-kurs"></span>
+        <span class="valuta">BTC</span>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Получить курс Ethereum
+            $.ajax({
+                url: "https://api.coindesk.com/v1/bpi/currentprice/ETH.json",
+                dataType: "json",
+                success: function(data) {
+                    var ethKurs = data.bpi.USD.rate_float.toFixed(2);
+                    $("#eth-kurs").text(ethKurs);
+                }
+            });
+            // Получить курс Bitcoin
+            $.ajax({
+                url: "https://api.coindesk.com/v1/bpi/currentprice/BTC.json",
+                dataType: "json",
+                success: function(data) {
+                    var btcKurs = data.bpi.USD.rate_float.toFixed(2);
+                    $("#btc-kurs").text(btcKurs);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
