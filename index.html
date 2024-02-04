@@ -3,64 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Курсы криптовалют</title>
+    <title>Погода в Москве</title>
     <style>
         body {
             font-family: sans-serif;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 20px;
         }
-        .kurs {
+        .pogoda {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
-            text-align: center;
         }
-        .valuta {
+        .temperatura {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .opisanie {
             font-size: 16px;
             color: #888;
         }
-        @media (max-width: 360px) {
-            .kurs {
-                font-size: 18px;
-            }
+        .fecha {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .hora {
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="kurs">
-        <span id="eth-kurs"></span>
-        <span class="valuta">ETH</span>
+    <div class="pogoda">
+        <span id="ciudad"></span>
+        <span id="temperatura"></span>
+        <span class="opisanie" id="descripcion"></span>
     </div>
-    <div class="kurs">
-        <span id="btc-kurs"></span>
-        <span class="valuta">BTC</span>
+    <div class="fecha">
+        <span id="fecha"></span>
+    </div>
+    <div class="hora">
+        <span id="hora"></span>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            // Получить курс Ethereum
+            // Получить погоду для Москвы
             $.ajax({
-                url: "https://api.coindesk.com/v1/bpi/currentprice/ETH.json",
+                url: "https://api.openweathermap.org/data/2.5/weather?q=Moscow&appid=YOUR_API_KEY&units=metric&lang=ru",
                 dataType: "json",
                 success: function(data) {
-                    var ethKurs = data.bpi.USD.rate_float.toFixed(2);
-                    $("#eth-kurs").text(ethKurs);
+                    var ciudad = data.name;
+                    var temperatura = data.main.temp.toFixed(1);
+                    var descripcion = data.weather[0].description;
+                    $("#ciudad").text(ciudad);
+                    $("#temperatura").text(temperatura + "°C");
+                    $("#descripcion").text(descripcion);
                 }
             });
-            // Получить курс Bitcoin
-            $.ajax({
-                url: "https://api.coindesk.com/v1/bpi/currentprice/BTC.json",
-                dataType: "json",
-                success: function(data) {
-                    var btcKurs = data.bpi.USD.rate_float.toFixed(2);
-                    $("#btc-kurs").text(btcKurs);
-                }
-            });
+            // Получить дату и время
+            var fecha = new Date();
+            var dia = fecha.getDate();
+            var mes = fecha.getMonth() + 1;
+            var año = fecha.getFullYear();
+            var hora = fecha.getHours();
+            var minutos = fecha.getMinutes();
+            var segundos = fecha.getSeconds();
+            $("#fecha").text(dia + "." + mes + "." + año);
+            $("#hora").text(hora + ":" + minutos + ":" + segundos);
         });
     </script>
 </body>
