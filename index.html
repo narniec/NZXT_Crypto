@@ -4,75 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Погода в Москве</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 20px;
-        }
-        .pogoda {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .temperatura {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .opisanie {
-            font-size: 16px;
-            color: #888;
-        }
-        .fecha {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .hora {
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="pogoda">
-        <span id="ciudad"></span>
-        <span id="temperatura"></span>
-        <span class="opisanie" id="descripcion"></span>
+    <div class="container">
+        <div class="weather-box">
+            <div class="city">Москва</div>
+            <div class="temperature">
+                <span id="temp"></span>&deg;C
+            </div>
+            <div class="description" id="description"></div>
+            <div class="icon" id="icon"></div>
+        </div>
+        <div class="date-time">
+            <span id="date"></span>
+            <span id="time"></span>
+        </div>
     </div>
-    <div class="fecha">
-        <span id="fecha"></span>
-    </div>
-    <div class="hora">
-        <span id="hora"></span>
-    </div>
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            // Получить погоду для Москвы
-            $.ajax({
-                url: "https://api.openweathermap.org/data/2.5/weather?q=Moscow&appid=YOUR_API_KEY&units=metric&lang=ru",
-                dataType: "json",
-                success: function(data) {
-                    var ciudad = data.name;
-                    var temperatura = data.main.temp.toFixed(1);
-                    var descripcion = data.weather[0].description;
-                    $("#ciudad").text(ciudad);
-                    $("#temperatura").text(temperatura + "°C");
-                    $("#descripcion").text(descripcion);
-                }
-            });
-            // Получить дату и время
-            var fecha = new Date();
-            var dia = fecha.getDate();
-            var mes = fecha.getMonth() + 1;
-            var año = fecha.getFullYear();
-            var hora = fecha.getHours();
-            var minutos = fecha.getMinutes();
-            var segundos = fecha.getSeconds();
-            $("#fecha").text(dia + "." + mes + "." + año);
-            $("#hora").text(hora + ":" + minutos + ":" + segundos);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
