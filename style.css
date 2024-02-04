@@ -43,11 +43,3 @@ body {
     height: 64px;
     margin: 0 auto;
 }
-
-.date-time {
-    margin-top: 20px;
-}
-
-#date, #time {
-    font-size: 18px;
-}
